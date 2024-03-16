@@ -18,7 +18,6 @@ export async function GET(request : Request) {
     if(!products) throw new Error("No Product found");
 
     const updatedProducts = await Promise.all(products.map(async (currentProduct) => { // from database
-
       const scrapedProduct = await scrapeAmazonProduct(currentProduct.url); //from scrape
 
       if(!scrapedProduct) return;
@@ -30,7 +29,7 @@ export async function GET(request : Request) {
         },
       ];
 
-      const product = {
+      const changeProduct = {
         ...scrapedProduct,
         priceHistory : updatedPriceHistory,
         lowestPrice : getLowestPrice(updatedPriceHistory),
@@ -39,8 +38,8 @@ export async function GET(request : Request) {
       }
 
       const updatedProduct = await Product.findByIdAndUpdate(
-        {url : product.url, },
-        product
+        {url : changeProduct.url, },
+        changeProduct,
       )
 
       const emailNotifType = getEmailNotifType(scrapedProduct, currentProduct)
@@ -53,15 +52,14 @@ export async function GET(request : Request) {
 
         const emailContent = await generateEmailBody(productInfo, emailNotifType);
         const usersEmail = updatedProduct.user.map((user: any )=> user.email)
-        await sendEmail(emailContent, usersEmail)
-        
+        await sendEmail(emailContent, usersEmail)  
       }
       return updatedProduct;
 
     }));
 
     return NextResponse.json({
-      message: 'ok',
+      message: 'Ok',
       data : updatedProducts,
     })
 
