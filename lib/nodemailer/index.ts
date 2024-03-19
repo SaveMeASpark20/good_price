@@ -11,7 +11,7 @@ const Notification = {
 }
 
 export async function generateEmailBody(product : EmailProductInfo, type : NotificationType){
-  //make this hindi putol word yung huling part ng  word bago lagyan ng tatlong tuldok possible
+
   const shortenedTitle = product.title.length > 20 ? `${product.title.substring(0, 20)}...` : product.title;
 
   let subject = "";
