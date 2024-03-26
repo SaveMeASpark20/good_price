@@ -37,6 +37,31 @@ export function extractCurrency(element: any) {
   return currencyText ? currencyText : "";
 }
 
+export function extractAvailability(...elements: any) {
+  for(const element of elements){
+    let availability = element.text().trim();
+    const searchText = "Currently unavailable";
+    let textIndex = availability.indexOf(searchText);
+    let result = availability.substring(0, textIndex + searchText.length)
+    
+    console.log(result);
+    if(result.toLowerCase() === 'currently unavailable'){
+      return true;
+    }
+  }
+
+  return false;
+}
+
+export function extractReviewStar(...elements: any) {
+  for(const element of elements){
+    const starRate = element.text().trim().split(' ')[0];
+    return  starRate? starRate : 0;
+  }
+
+  return 0;
+}
+
 // Extracts description from two possible elements from amazon
 export function extractDescription($: any) {
   // these are possible elements holding description of the product

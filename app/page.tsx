@@ -4,6 +4,7 @@ import Image from 'next/image'
 import React from 'react'
 import { getAllProduct } from "@/lib/action"
 import ProductCard from '@/components/ProductCard'
+import Filterbar from '@/components/Filterbar'
 
 const Home = async () => {
 
@@ -41,7 +42,12 @@ const Home = async () => {
 
       
       <section className='trending-section'>
-        <h2 className='section-text'>Trending</h2>
+        <div className='flex justify-between'>
+          <h2 className='section-text'>Trending</h2>
+          <div>
+            <Filterbar products= {allProduct} />
+          </div>
+        </div>
         <div className='flex flex-wrap gap-x-8 gap-y-16'>
           { allProduct?.map((product) => (
             <ProductCard key={product._id} product={product}/>

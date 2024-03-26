@@ -7,6 +7,7 @@ const productSchema = new mongoose.Schema({
   title: {type: String, required: true},
   currentPrice: {type: Number, required: true},
   originalPrice: {type: Number, required: true},
+  star: {type: Number},
   priceHistory: [
     {
       price: {type: Number, required: true},

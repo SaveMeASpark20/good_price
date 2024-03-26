@@ -14,7 +14,7 @@ export async function scrapeAndStoreProduct(productUrl : string) {
 
   try {
 
-    connectToDB(); // i think it will need to have a await
+    await connectToDB(); // i think it will need to have a await
 
     const scrapedProduct = await scrapeAmazonProduct(productUrl);
     if(!scrapedProduct) return
@@ -23,7 +23,7 @@ export async function scrapeAndStoreProduct(productUrl : string) {
 
     //The point of this is to update the data of the database
     const existingProduct = await Product.findOne({url: scrapedProduct.url});
-    console.log(existingProduct);
+    
 
     if(existingProduct){
       const updatePriceHistory : any = [
@@ -45,8 +45,10 @@ export async function scrapeAndStoreProduct(productUrl : string) {
       product,
       { upsert: true, new: true }
       );
+      
+      console.log(newProduct);
 
-    revalidatePath(`/products/${newProduct._id}`);  
+    revalidatePath(`/products/${newProduct._id}`);
 
   } catch (error: any) {
     throw new Error(`Failed to create/update product: ${error.message}`)
@@ -55,7 +57,7 @@ export async function scrapeAndStoreProduct(productUrl : string) {
 
 export async function getProductById(productId: string){
   try{
-    connectToDB();
+    await connectToDB();
     const product = await Product.findById({_id : productId});
   
     return product;
@@ -67,7 +69,7 @@ export async function getProductById(productId: string){
 
 export async function getAllProduct(){
   try{
-    connectToDB();
+    await connectToDB();
     const products = await Product.find();
   
     return products;
@@ -78,7 +80,7 @@ export async function getAllProduct(){
 
 export async function getSimilarProducts(productId: string){
   try{
-    connectToDB();
+    await connectToDB();
     const currentProduct = await Product.findById({_id : productId});
     if(!currentProduct) return null;
 
@@ -95,7 +97,7 @@ export async function getSimilarProducts(productId: string){
 
 export async function addUserEmailToProduct(productId: string, userEmail: string){
   try {
-    // connectToDB();
+    await connectToDB();
     const product = await Product.findById(productId);
 
     if(!product) return
