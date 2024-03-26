@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Product from './model/product.model';
 
 let isConnected = false;// Variable to track the connection status
 
@@ -19,3 +20,4 @@ export const connectToDB = async () => {
     console.log(error)
   }
 }
+
