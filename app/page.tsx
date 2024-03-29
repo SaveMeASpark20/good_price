@@ -1,15 +1,14 @@
 import HeroCarousel from '@/components/HeroCarousel'
-import Searchbar from '@/components/Searchbar'
-import Image from 'next/image'
-import React from 'react'
-import { getAllProduct } from "@/lib/action"
 import ProductCard from '@/components/ProductCard'
-import Filterbar from '@/components/Filterbar'
+import Searchbar from '@/components/Searchbar'
+import Trend from '@/components/Trend'
+import { getAllProduct } from '@/lib/action'
+
+import Image from 'next/image'
+
 
 const Home = async () => {
-
-  const allProduct = await getAllProduct() ;
-
+  
   return (
     <>
       <section className='px-6 md:px-20 py-24'>
@@ -41,19 +40,8 @@ const Home = async () => {
       </section>
 
       
-      <section className='trending-section'>
-        <div className='flex justify-between'>
-          <h2 className='section-text'>Trending</h2>
-          <div>
-            <Filterbar products= {allProduct} />
-          </div>
-        </div>
-        <div className='flex flex-wrap gap-x-8 gap-y-16'>
-          { allProduct?.map((product) => (
-            <ProductCard key={product._id} product={product}/>
-            
-          ))}
-        </div>
+      <section className='trending-section' id='trending'>
+          <Trend />
       </section>
     </>
   )
