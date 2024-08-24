@@ -1,76 +1,70 @@
-'use client'
+"use client";
 
 import { scrapeAndStoreProduct } from "@/lib/action";
 import { FormEvent, useState } from "react";
 
-const isValidAmazonLink = (url : string) => {
+const isValidAmazonLink = (url: string) => {
   try {
     const parsedUrl = new URL(url);
     const hostname = parsedUrl.hostname;
-    
-    if( 
-      hostname.includes('amazon.com') ||
-      hostname.includes('amazon.') ||
-      hostname.endsWith('amazon')
-      ) {
-        return true;
-      }
+
+    if (
+      hostname.includes("amazon.com") ||
+      hostname.includes("amazon.") ||
+      hostname.endsWith("amazon")
+    ) {
+      return true;
+    }
   } catch (error) {
-    return false
+    return false;
   }
 
-  return false
-}
+  return false;
+};
 
 const Searchbar = () => {
-  const [searchPrompt, setSearchPrompt] = useState('');
+  const [searchPrompt, setSearchPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (event : FormEvent<HTMLFormElement>) => {
-
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-  //check if the link is amazon
+    //check if the link is amazon
     const isValidLink = isValidAmazonLink(searchPrompt);
 
-    if(!isValidLink) return alert('Please provide a valid Amazon link');
-    
-    try{
+    if (!isValidLink) return alert("Please provide a valid Amazon link");
+
+    try {
       setIsLoading(true);
 
       const product = await scrapeAndStoreProduct(searchPrompt);
-      1
-    } catch(error) {
-      alert('There is something wrong!!')
+    } catch (error) {
+      alert("There is something wrong!!");
       console.log(error);
-    } finally{
-      setIsLoading(false)
+    } finally {
+      setIsLoading(false);
     }
-
   };
 
   return (
-    <form 
-      className='flex flex-wrap gap-4 mt-12' 
-      onSubmit={handleSubmit}
-    >
-      <input 
+    <form className="flex flex-wrap gap-4 mt-12" onSubmit={handleSubmit}>
+      <input
         type="text"
         value={searchPrompt}
         onChange={(e) => setSearchPrompt(e.target.value)}
         placeholder="Enter product link"
         className="searchbar-input"
       />
-      
-      <button 
-        type="submit" 
+
+      <button
+        type="submit"
         className="searchbar-btn"
-        disabled={searchPrompt === ''}
+        disabled={searchPrompt === ""}
       >
-        {isLoading ? 'Searching...' : 'Search'}
+        {isLoading ? "Searching..." : "Search"}
       </button>
     </form>
-  )
-}
+  );
+};
 
-export default Searchbar
+export default Searchbar;
