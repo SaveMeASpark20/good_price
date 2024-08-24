@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const navIcons = [
   { src: "/assets/icons/search.svg", alt: "search" },
@@ -10,7 +10,6 @@ const navIcons = [
 ];
 const Navbar = () => {
   const pathName = usePathname();
-  const searchParam = useSearchParams();
 
   return (
     <header className="w-full">
