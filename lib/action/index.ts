@@ -63,49 +63,6 @@ export async function getProductById(productId: string) {
   }
 }
 
-{
-  /* export const getMovies = async ({
-  query,
-}: {
-  query?: string
-}) => {
-  try {
-    if (!movies) await init()
-
-    const skip = (page - 1) * limit
-
-    const pipeline: PipelineStage[] = []
-
-    if (query) {
-      pipeline.unshift({
-        $search: {
-          index: 'search',
-          text: {
-            query,
-            fuzzy: {
-              maxEdits: 1,
-              prefixLength: 3,
-              maxExpansions: 50
-            },
-            path: {
-              wildcard: '*'
-            }
-          }
-        }
-      })
-    }
-
-    await sleep(1000)
-
-    const result = await movies.aggregate(pipeline).toArray()
-
-    return { movies: result }
-  } catch (error) {
-    return { error }
-  }
-}  */
-}
-
 export async function getAllProduct({
   query,
 }: {
