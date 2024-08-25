@@ -15,7 +15,8 @@ const FilterSearchbar = ({ search }: SearchBarParams) => {
 
   const useDebounce = useCallback(
     debounce((value: string) => {
-      router.push(`?search=${value}`, { scroll: false });
+      if (value.length > 0) router.push(`?search=${value}`, { scroll: false });
+      else router.push("/", { scroll: false });
     }),
     [textInput]
   );
