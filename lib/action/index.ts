@@ -83,6 +83,10 @@ export async function getAllProduct({
           ],
         },
       });
+    } else {
+      pipeline.push({
+        $match: {},
+      });
     }
 
     const products = await Product.aggregate(pipeline).exec();
