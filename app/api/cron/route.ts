@@ -10,6 +10,8 @@ import Product from "@/lib/model/product.model";
 import { scrapeAmazonProduct } from "@/lib/scraper";
 import { generateEmailBody, sendEmail } from "@/lib/nodemailer";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: Request) {
   try {
     // Connect to the database
